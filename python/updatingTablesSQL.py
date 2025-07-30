@@ -1,26 +1,26 @@
 import mysql.connector
 
-
-mydb=mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="roottoor",
-    database="rohan_ece"
-        )
-
-
-mycursor = mydb.cursor()
-mycursor.execute("update user set password =  123456 where email = uddhav@gmail.com")
-
-# result = mycursor.fetchall()
-# for row in result:
-#     print(row)
+def update_people(id,name):
+    mydb=mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="roottoor",
+        database="rohan_ece"
+            )
 
 
-mydb.commit()
+    mycursor = mydb.cursor()
+    sql = "UPDATE people SET name = %s where id = %s"
+    val = [name,id]
+    mycursor.execute(sql,val)
 
-mycursor.close()
-mydb.close()
-# print(mycursor.rowcount, "record insterted")
+
+    mydb.commit()
+    print(mycursor.rowcount,"record updated.")
+    mycursor.close()
+    mydb.close()
 
 
+id = input("Enter the user ID to update: ")
+name = input("Enter the NEW NAME: ")
+update_people(id,name)
